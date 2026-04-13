@@ -1,41 +1,63 @@
+import Link from "next/link";
+
+const offerings = [
+  {
+    title: "UI/UX Design",
+    description: "User-focused interfaces designed to look sharp and convert better.",
+  },
+  {
+    title: "Shopify Development",
+    description: "High-converting Shopify stores optimized for performance and growth.",
+  },
+  {
+    title: "Custom Development",
+    description: "Fully custom-coded websites built for scalability and speed.",
+  },
+  {
+    title: "WordPress Development",
+    description: "Flexible CMS-powered websites easy to manage and scale.",
+  },
+];
+
 export function PerformanceSection() {
   return (
-    <section className="mx-auto w-full max-w-7xl px-4 py-10 md:px-5 md:py-12">
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-y-0 right-0 hidden w-[36.5%] bg-[#a8d5ff] md:block" />
-
-        <div className="relative z-10 flex min-h-[360px] flex-col justify-between gap-8 p-4 md:min-h-[560px] md:w-[63.5%] md:gap-11 md:p-10">
-          <div className="space-y-4 md:space-y-5">
-            <h2 className="max-w-[620px] text-3xl leading-[1.06] font-medium text-black sm:text-4xl md:text-[68px]">
-              Digital Experiences That{" "}
-              <span className="font-serif text-[1.02em] italic">Perform</span>
+    <section className="w-full bg-[#ece9e3] py-12 md:py-15">
+      <div className="mx-auto w-full max-w-7xl px-4 md:px-5">
+        <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+          <div className="max-w-[352px]">
+            <h2 className="text-[43px] leading-[1.05] font-medium text-black md:text-[55px]">
+              Our services
             </h2>
-
-            <p className="max-w-[608px] text-lg leading-[1.3] text-black/60 sm:text-xl md:text-[28px] md:leading-[34px]">
-              We design and build Shopify stores, UI/UX, and custom solutions
-              that help brands grow, convert, and scale.
+            <p className="mt-4 text-[16px] leading-[1.1] text-black/60 md:text-[20px]">
+              What we design, build, and launch for modern brands.
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-5 md:flex md:gap-[56px]">
-            <div className="space-y-1">
-              <p className="text-4xl leading-none font-medium text-black sm:text-5xl md:text-[68px]">
-                100+
-              </p>
-              <p className="text-base leading-[1.2] text-black/65 sm:text-xl md:text-[32px] md:leading-[1.05]">
-                Shopify Stores Built
-              </p>
-            </div>
+          <Link
+            href="/services"
+            className="inline-flex w-fit items-center justify-center bg-black px-6 py-2.5 text-base font-normal text-white shadow-[0_6px_14px_rgba(0,0,0,0.35)] transition-transform hover:scale-[1.02] active:scale-[0.98] md:mt-1 md:px-8 md:text-[27px] md:leading-none"
+          >
+            Explore Services
+          </Link>
+        </div>
 
-            <div className="space-y-1">
-              <p className="text-4xl leading-none font-medium text-black sm:text-5xl md:text-[68px]">
-                50+
-              </p>
-              <p className="text-base leading-[1.2] text-black/65 sm:text-xl md:text-[32px] md:leading-[1.05]">
-                Custom Code Projects
-              </p>
-            </div>
-          </div>
+        <div className="mt-8 grid gap-3 md:mt-9 md:grid-cols-2 md:gap-4">
+          {offerings.map((item) => (
+            <article
+              key={item.title}
+              className="flex items-start gap-3 bg-[#f2f2f2] p-3 shadow-[0_2px_6px_rgba(0,0,0,0.15)] md:gap-4 md:p-4"
+            >
+              <div className="h-[39px] w-[39px] shrink-0 bg-[#ef9aa0] md:h-[51px] md:w-[51px]" />
+              <div>
+                <h3 className="text-xl leading-tight font-medium text-black md:text-[24px] md:leading-tight">
+                  {item.title}
+                </h3>
+                <p className="mt-1.5 max-w-[560px] text-sm leading-tight text-black/80 md:text-[16px] md:leading-[1.1]">
+                  {item.description}
+                </p>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </section>

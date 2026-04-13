@@ -3,7 +3,9 @@ import Link from "next/link";
 import { Navbar } from "./components/navbar";
 import { ClientLogos } from "./components/client-logos";
 import { ServicesSection } from "./components/services-section";
+import { SelectedWorkSection } from "./components/selected-work-section";
 import { PerformanceSection } from "./components/performance-section";
+import { ExpertiseSection } from "./components/expertise-section";
 import { WhyChooseSection } from "./components/why-choose-section";
 import { FaqSection } from "./components/faq-section";
 import { ProjectCtaSection } from "./components/project-cta-section";
@@ -56,6 +58,8 @@ export default function Home() {
 
 
       <ServicesSection />
+      <SelectedWorkSection />
+      <ExpertiseSection />
       <PerformanceSection />
       <WhyChooseSection />
       <FaqSection />

@@ -32,7 +32,7 @@ export function ServicesSection() {
             key={service.title}
             className="overflow-hidden bg-[#f5f2ed] shadow-[0_4px_18px_rgba(0,0,0,0.15)]"
           >
-            <div className="h-[240px] bg-[#ece8e2] sm:h-[300px] md:h-[356px]">
+            <div className="h-[320px] bg-[#ece8e2] sm:h-[340px] md:h-[356px]">
               <video
                 src={service.video}
                 className="h-full w-full object-cover"
