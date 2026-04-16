@@ -4,7 +4,7 @@ import { Navbar } from "./components/navbar";
 import { ClientLogos } from "./components/client-logos";
 import { ServicesSection } from "./components/services-section";
 import { SelectedWorkSection } from "./components/selected-work-section";
-import { PerformanceSection } from "./components/performance-section";
+import { Services2 } from "./components/services2";
 import { ExpertiseSection } from "./components/expertise-section";
 import { WhyChooseSection } from "./components/why-choose-section";
 import { FaqSection } from "./components/faq-section";
@@ -23,21 +23,18 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main className="flex flex-col w-full bg-background">
+    <main className="flex flex-col w-full bg-white">
       <Navbar />
 
       <Herosection2 />
       
-      <div className="mx-auto flex w-full max-w-7xl flex-col px-4 pb-3 md:px-5 pt-10">
-        <ClientLogos />
-      </div>
 
 
 
-      <ServicesSection />
-      <SelectedWorkSection />
+
+
       <ExpertiseSection />
-      <PerformanceSection />
+      <Services2 />
       <WhyChooseSection />
       <FaqSection />
       <ProjectCtaSection />

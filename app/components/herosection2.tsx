@@ -22,6 +22,7 @@ export function Herosection2() {
   const text3Ref = useRef<HTMLDivElement>(null);
   const text4Ref = useRef<HTMLDivElement>(null);
   const progressBarRef = useRef<HTMLDivElement>(null);
+  const progressBarContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,16 +41,16 @@ export function Herosection2() {
         progress = Math.min(scrollPosition / maxScroll, 1);
       }
       
-      // 1. Circle expands (0.0 to 0.25)
-      const p1 = Math.min(progress / 0.25, 1);
+      // 1. Circle expands (0.0 to 0.20)
+      const p1 = Math.min(progress / 0.20, 1);
       circleBgRef.current.style.transform = `scale(${1 + p1 * 50})`;
       
       // The text fading logic has been removed so it remains visible under the circle
       // 2. Circle eclipses text due to z-index (no JS required)
 
-      // 3. Mascot shifts right & scales up (0.25 to 0.5)
+      // 3. Mascot shifts right & scales up (0.10 to 0.25)
       let p2 = 0; 
-      if (progress > 0.25) p2 = Math.min((progress - 0.25) / 0.25, 0.5);
+      if (progress > 0.10) p2 = Math.min((progress - 0.10) / 0.15, 1);
       
       const isMobile = window.innerWidth < 768; // standard md tailwind breakpoint
 
@@ -59,27 +60,19 @@ export function Herosection2() {
 
       if (isMobile) {
          // Mobile: Pull slightly UP over the text, remain horizontally centered, scale moderately
-         shiftX = p2 * 0; 
-         shiftY = p2 * -35; // Move UP 35vh to anchor near top
-         mascotScale = 1 + p2 * 1.5; // Scale to fit nicely top-center
+         shiftX = 0; 
+         shiftY = p2 * -17.5; // Move UP
+         mascotScale = 1 + p2 * 0.75; // Scale to fit nicely top-center
       } else {
          // Desktop: Pristine untouched logic
-         shiftX = p2 * 50; 
-         shiftY = p2 * 40; 
-         mascotScale = 1 + p2 * 2.5; 
+         shiftX = p2 * 25; 
+         shiftY = p2 * 20; 
+         mascotScale = 1 + p2 * 1.25; 
       }
       
       if (mascotRef.current) {
         mascotRef.current.style.transformOrigin = "50% 30%"; 
         mascotRef.current.style.transform = `translate(${shiftX}vw, ${shiftY}vh) scale(${mascotScale})`;
-        
-        // Once the black background fully consumed the screen (p2 > 0), we can turn off the circular clip mask.
-        // This instantly reveals the full uncropped mascot video. Because the screen is already black, the video bounds will seamlessly blend in.
-        if (p2 > 0.02) {
-           mascotRef.current.style.overflow = "visible";
-        } else {
-           mascotRef.current.style.overflow = "hidden";
-        }
       }
       
       const videoEl = mascotRef.current?.querySelector("video");
@@ -90,10 +83,11 @@ export function Herosection2() {
          videoEl.style.objectPosition = "";
       }
 
-      // 4. Reveal Left Text Container (0.3 to 0.45)
+      // 4. Reveal Left Text Container (0.25 to 0.40)
       let p3 = 0; 
-      if (progress > 0.3) p3 = Math.min((progress - 0.3) / 0.15, 1);
+      if (progress > 0.25) p3 = Math.min((progress - 0.25) / 0.15, 1);
       if (leftTextRef.current) leftTextRef.current.style.opacity = p3.toString();
+      if (progressBarContainerRef.current) progressBarContainerRef.current.style.opacity = p3.toString();
 
       // 5. Swap Left Texts (0.4 to 1.0)
       const setOpacity = (ref: React.RefObject<HTMLDivElement | null>, targetO: number) => {
@@ -151,65 +145,68 @@ export function Herosection2() {
                 
                 {/* 1. Shopify Development */}
                 <div ref={text1Ref} className="col-start-1 row-start-1 flex flex-col justify-center transition-opacity duration-300">
-                   <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-4">Shopify Development.</h2>
+                   <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl mb-4 text-white">
+                     <span className="font-semibold">Shopify</span> <span className="font-serif italic font-light">Development.</span>
+                   </h2>
                    <p className="text-sm sm:text-base md:text-xl text-gray-300 font-light max-w-lg mb-6 leading-relaxed">
                      We build high-performing Shopify stores designed to convert visitors into customers. From seamless navigation to optimized product pages, every detail is crafted to enhance user experience and drive sales. Whether you're launching or scaling, we create stores that grow with your business.
                    </p>
-                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-4 text-gray-400 font-light text-xs sm:text-sm md:text-base tracking-wide">
-                     <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-white rounded-full flex-shrink-0"></span>Custom Shopify Stores</li>
-                     <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-white rounded-full flex-shrink-0"></span>Theme Customization</li>
-                     <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-white rounded-full flex-shrink-0"></span>Conversion Optimization</li>
-                     <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-white rounded-full flex-shrink-0"></span>App Integrations</li>
+                   <ul className="flex flex-col gap-y-1.5 text-gray-300 font-light text-sm sm:text-base md:text-lg tracking-wide pl-2">
+                     <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 bg-gray-400 rounded-full flex-shrink-0"></span>Custom Shopify Stores</li>
+                     <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 bg-gray-400 rounded-full flex-shrink-0"></span>Theme Customization</li>
+                     <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 bg-gray-400 rounded-full flex-shrink-0"></span>Conversion Optimization</li>
+                     <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 bg-gray-400 rounded-full flex-shrink-0"></span>App Integrations</li>
                    </ul>
                 </div>
 
                 {/* 2. Custom Development */}
                 <div ref={text2Ref} className="col-start-1 row-start-1 flex flex-col justify-center opacity-0 transition-opacity duration-300">
-                   <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-4">Custom Development.</h2>
+                   <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl mb-4 text-white">
+                     <span className="font-semibold">Custom</span> <span className="font-serif italic font-light">Development.</span>
+                   </h2>
                    <p className="text-sm sm:text-base md:text-xl text-gray-300 font-light max-w-lg mb-6 leading-relaxed">
                      We engineer bespoke, high-performance web applications tailored to your specific business infrastructure. By leveraging modern frameworks, we ensure your digital platform is highly scalable, fast, and completely free from creative limitations.
                    </p>
-                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-4 text-gray-400 font-light text-xs sm:text-sm md:text-base tracking-wide">
-                     <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-white rounded-full flex-shrink-0"></span>Scalable Web Apps</li>
-                     <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-white rounded-full flex-shrink-0"></span>API Integrations</li>
-                     <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-white rounded-full flex-shrink-0"></span>Full-Stack Architecture</li>
-                     <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-white rounded-full flex-shrink-0"></span>Database Design</li>
+                   <ul className="flex flex-col gap-y-1.5 text-gray-300 font-light text-sm sm:text-base md:text-lg tracking-wide pl-2">
+                     <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 bg-gray-400 rounded-full flex-shrink-0"></span>Scalable Web Apps</li>
+                     <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 bg-gray-400 rounded-full flex-shrink-0"></span>API Integrations</li>
+                     <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 bg-gray-400 rounded-full flex-shrink-0"></span>Full-Stack Architecture</li>
+                     <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 bg-gray-400 rounded-full flex-shrink-0"></span>Database Design</li>
                    </ul>
                 </div>
 
                 {/* 3. WordPress Development */}
                 <div ref={text3Ref} className="col-start-1 row-start-1 flex flex-col justify-center opacity-0 transition-opacity duration-300">
-                   <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-4">WordPress Development.</h2>
+                   <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl mb-4 text-white">
+                     <span className="font-semibold">WordPress</span> <span className="font-serif italic font-light">Development.</span>
+                   </h2>
                    <p className="text-sm sm:text-base md:text-xl text-gray-300 font-light max-w-lg mb-6 leading-relaxed">
                      We craft fully customized, responsive WordPress websites that give you effortless control over your content. Blending premium aesthetic design with rock-solid technical foundations, our builds ensure rapid load times and ironclad security.
                    </p>
-                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-4 text-gray-400 font-light text-xs sm:text-sm md:text-base tracking-wide">
-                     <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-white rounded-full flex-shrink-0"></span>Custom Themes</li>
-                     <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-white rounded-full flex-shrink-0"></span>SEO Optimization</li>
-                     <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-white rounded-full flex-shrink-0"></span>Secure Architecture</li>
-                     <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-white rounded-full flex-shrink-0"></span>Seamless Migrations</li>
+                   <ul className="flex flex-col gap-y-1.5 text-gray-300 font-light text-sm sm:text-base md:text-lg tracking-wide pl-2">
+                     <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 bg-gray-400 rounded-full flex-shrink-0"></span>Custom Themes</li>
+                     <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 bg-gray-400 rounded-full flex-shrink-0"></span>SEO Optimization</li>
+                     <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 bg-gray-400 rounded-full flex-shrink-0"></span>Secure Architecture</li>
+                     <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 bg-gray-400 rounded-full flex-shrink-0"></span>Seamless Migrations</li>
                    </ul>
                 </div>
 
                 {/* 4. UI/UX Design */}
                 <div ref={text4Ref} className="col-start-1 row-start-1 flex flex-col justify-center opacity-0 transition-opacity duration-300">
-                   <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-4">UI/UX Design.</h2>
+                   <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl mb-4 text-white">
+                     <span className="font-semibold">UI/UX</span> <span className="font-serif italic font-light">Design.</span>
+                   </h2>
                    <p className="text-sm sm:text-base md:text-xl text-gray-300 font-light max-w-lg mb-6 leading-relaxed">
                      We create stunning, intuitive interfaces that delight users and foster deep engagement. Through rigorous research and wireframing, we architect digital environments that remove friction and convert passive visitors into loyal brand advocates.
                    </p>
-                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-4 text-gray-400 font-light text-xs sm:text-sm md:text-base tracking-wide">
-                     <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-white rounded-full flex-shrink-0"></span>Prototyping & Wireframes</li>
-                     <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-white rounded-full flex-shrink-0"></span>User Research</li>
-                     <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-white rounded-full flex-shrink-0"></span>Journey Mapping</li>
-                     <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-white rounded-full flex-shrink-0"></span>Interface Design</li>
+                   <ul className="flex flex-col gap-y-1.5 text-gray-300 font-light text-sm sm:text-base md:text-lg tracking-wide pl-2">
+                     <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 bg-gray-400 rounded-full flex-shrink-0"></span>Prototyping &amp; Wireframes</li>
+                     <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 bg-gray-400 rounded-full flex-shrink-0"></span>User Research</li>
+                     <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 bg-gray-400 rounded-full flex-shrink-0"></span>Journey Mapping</li>
+                     <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 bg-gray-400 rounded-full flex-shrink-0"></span>Interface Design</li>
                    </ul>
                 </div>
 
-            </div>
-             
-             {/* Progress Bar Container */}
-             <div className="w-full max-w-lg h-1 bg-white/20 rounded-full mt-12 overflow-hidden relative">
-                <div ref={progressBarRef} className="absolute left-0 top-0 h-full bg-white transition-none" style={{ width: '0%' }} />
              </div>
         </div>
 
@@ -231,13 +228,13 @@ export function Herosection2() {
                  {/* Expanding Dark Background */}
                  <div 
                    ref={circleBgRef}
-                   className="absolute inset-0 rounded-full bg-[#2F2F2F] shadow-lg will-change-transform z-0 origin-center"
+                   className="absolute inset-0 rounded-[50%] bg-[#2F2F2F] will-change-transform z-0 origin-center [clip-path:circle(50%_at_50%_50%)]"
                  />
 
                  {/* The Static Mascot */}
                  <div 
                    ref={mascotRef}
-                   className="absolute inset-0 rounded-full overflow-hidden will-change-transform z-10 origin-center"
+                   className="absolute inset-0 rounded-[50%] overflow-hidden will-change-transform z-10 origin-center [clip-path:circle(50%_at_50%_50%)] [-webkit-mask-image:-webkit-radial-gradient(black,black)] isolate"
                  >
                     <video 
                        src="/dnc_mascot.mp4" 
@@ -268,7 +265,7 @@ export function Herosection2() {
 
           </div>
 
-          <div ref={footerRef} className="w-full flex flex-col gap-4 sm:flex-row sm:justify-between items-center mt-30 relative z-10 will-change-transform border-t border-black/80 pt-6">
+          <div ref={footerRef} className="w-full flex flex-col gap-4 sm:flex-row sm:justify-between items-center mt-30 relative z-10 will-change-transform pt-6">
              <span className="text-black text-sm md:text-base font-normal tracking-wide">
                designncode
              </span>
@@ -280,6 +277,11 @@ export function Herosection2() {
              </span>
           </div>
 
+        </div>
+
+        {/* Full-width Progress Bar */}
+        <div ref={progressBarContainerRef} className="absolute bottom-8 left-6 md:left-12 lg:left-24 right-6 md:right-12 lg:right-24 h-0.5 sm:h-1 bg-[#3A3A3A] rounded-full overflow-hidden opacity-0 z-40 pointer-events-none">
+           <div ref={progressBarRef} className="absolute left-0 top-0 h-full bg-white transition-none" style={{ width: '0%' }} />
         </div>
 
       </div>

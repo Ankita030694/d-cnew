@@ -7,9 +7,9 @@ const expertiseStats = [
 
 export function ExpertiseSection() {
   return (
-    <section className="w-full bg-[#ece9e3] py-12 md:py-16">
+    <section className="w-full bg-[#2F2F2F] py-12 md:py-16">
       <div className="mx-auto w-full max-w-7xl px-4 md:px-5">
-        <h2 className="text-[34px] leading-tight font-medium text-black md:text-[56px]">
+        <h2 className="text-[34px] leading-tight font-medium text-white md:text-[56px]">
           Expertise
         </h2>
 
@@ -17,12 +17,12 @@ export function ExpertiseSection() {
           {expertiseStats.map((item) => (
             <article
               key={item.label}
-              className="flex min-h-[138px] flex-col justify-between bg-[#2f3135] p-4 md:min-h-[190px] md:p-5"
+              className="flex min-h-[138px] flex-col justify-between  bg-[#ece9e3] p-4 md:min-h-[190px] md:p-5"
             >
-              <p className="text-[44px] leading-none font-light text-white md:text-[58px]">
+              <p className="text-[44px] leading-none font-light text-blakc md:text-[58px]">
                 {item.value}
               </p>
-              <p className="text-xs tracking-[0.03em] text-white/85 md:text-[16px] md:leading-none">
+              <p className="text-xs tracking-[0.03em] text-black md:text-[16px] md:leading-none">
                 {item.label}
               </p>
             </article>
