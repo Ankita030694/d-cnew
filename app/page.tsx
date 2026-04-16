@@ -10,6 +10,7 @@ import { WhyChooseSection } from "./components/why-choose-section";
 import { FaqSection } from "./components/faq-section";
 import { ProjectCtaSection } from "./components/project-cta-section";
 import { FooterSection } from "./components/footer-section";
+import { Herosection2 } from "./components/herosection2";
 
 export const metadata: Metadata = {
   title: "Website Development Company in India | Custom Web Design Services",
@@ -22,38 +23,14 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main className="flex flex-col overflow-x-hidden bg-background">
+    <main className="flex flex-col w-full bg-background">
       <Navbar />
 
-      <section className="mx-auto flex min-h-screen w-full max-w-7xl flex-1 flex-col px-4 pb-3 md:px-5 -mt-15">
-        <div className="flex flex-1 flex-col items-center justify-center text-center">
-          <h1 className="text-4xl leading-tight font-medium text-black md:text-6xl">
-            Design that hits
-          </h1>
-
-          <p className="-mt-1 text-4xl leading-none font-medium italic font-serif text-black md:text-6xl">
-            different
-          </p>
-
-          <p className="mt-5 max-w-4xl text-lg leading-tight text-black/60 sm:text-xl md:mt-6 md:text-3xl">
-            We mix strategy, UI/UX, and no-boring visuals to help brands look
-            sharp, scroll-stopping, and impossible to ignore.
-          </p>
-
-          <Link
-            href="/contact"
-            className="mt-7 bg-black px-6 py-2 text-lg font-normal text-stone-100 shadow-xl shadow-black/40 sm:text-xl md:mt-8 md:px-8 md:text-2xl"
-          >
-            Get in touch
-          </Link>
-
-        </div>
-
+      <Herosection2 />
+      
+      <div className="mx-auto flex w-full max-w-7xl flex-col px-4 pb-3 md:px-5 pt-10">
         <ClientLogos />
-
-
-
-      </section>
+      </div>
 
 
 
