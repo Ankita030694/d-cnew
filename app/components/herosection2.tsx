@@ -21,8 +21,21 @@ export function Herosection2() {
   const text2Ref = useRef<HTMLDivElement>(null);
   const text3Ref = useRef<HTMLDivElement>(null);
   const text4Ref = useRef<HTMLDivElement>(null);
-  const progressBarRef = useRef<HTMLDivElement>(null);
+  
+  // Segmented Progress Bar Refs
   const progressBarContainerRef = useRef<HTMLDivElement>(null);
+  const fill1Ref = useRef<HTMLDivElement>(null);
+  const fill2Ref = useRef<HTMLDivElement>(null);
+  const fill3Ref = useRef<HTMLDivElement>(null);
+  const fill4Ref = useRef<HTMLDivElement>(null);
+  const icon1Ref = useRef<HTMLDivElement>(null);
+  const icon2Ref = useRef<HTMLDivElement>(null);
+  const icon3Ref = useRef<HTMLDivElement>(null);
+  const icon4Ref = useRef<HTMLDivElement>(null);
+  const seg1Ref = useRef<HTMLDivElement>(null);
+  const seg2Ref = useRef<HTMLDivElement>(null);
+  const seg3Ref = useRef<HTMLDivElement>(null);
+  const seg4Ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -67,16 +80,55 @@ export function Herosection2() {
          // Desktop: Pristine untouched logic
          shiftX = p2 * 25; 
          shiftY = p2 * 20; 
-         mascotScale = 1 + p2 * 1.25; 
+         mascotScale = 1 + (p2 * 0.2); 
       }
       
+      // Shared base state for mascot "pop out" effect
+      // Repositioned to start from the bottom of the circle
+      const baseScale = 1.6;
+      const baseTranslateY = -2; // Reduced shift so it sits at the bottom
+
       if (mascotRef.current) {
-        mascotRef.current.style.transformOrigin = "50% 30%"; 
-        mascotRef.current.style.transform = `translate(${shiftX}vw, ${shiftY}vh) scale(${mascotScale})`;
+        mascotRef.current.style.transformOrigin = "50% 50%"; 
+        
+        // Scaling down as we scroll down (1.6 -> 1.3)
+        const currentScale = baseScale - (p2 * 0.3); 
+        const currentTranslateY = baseTranslateY + (p2 * -5); 
+        
+        mascotRef.current.style.transform = `translate(${shiftX}vw, calc(${shiftY}vh + ${currentTranslateY}%)) scale(${currentScale})`;
+        
+        const negativeMargin = p2 * -12; 
+        mascotRef.current.style.marginTop = `${negativeMargin}vh`;
       }
       
       const videoEl = mascotRef.current?.querySelector("video");
       if (videoEl) {
+         // Dynamic mask to reveal full mascot on scroll
+         const currentScale = baseScale - (p2 * 0.3);
+         const maskRadius = 50 / currentScale;
+         
+         // To avoid gaps, the top-pop rectangle must meet the top of the circle
+         // Top of circle is at (50% - maskRadius)
+         const topOfCircle = 50 - maskRadius;
+         
+         // Reveal the body from bottom (initially cut at 85%, moving to 100%)
+         const bodyReveal = 85 + (p2 * 15); 
+
+         // 1. A rectangle from top to top-of-circle (allows head pop)
+         // 2. The circle itself
+         // 3. A bottom-cutoff that moves down (the "cut from bottom" reveal)
+         // We combine these to show the head + body-in-circle, and animate the bottom cut
+         const maskStr = `
+            linear-gradient(to bottom, black ${topOfCircle + 1}%, transparent ${topOfCircle + 1}%),
+            radial-gradient(circle at 50% 50%, black ${maskRadius}%, transparent ${maskRadius + 0.5}%),
+            linear-gradient(to top, transparent ${100 - bodyReveal}%, black ${100 - bodyReveal}%)
+         `.trim().replace(/\n/g, '');
+         
+         (videoEl as HTMLElement).style.webkitMaskImage = maskStr;
+         (videoEl as HTMLElement).style.maskImage = maskStr;
+         (videoEl as HTMLElement).style.webkitMaskComposite = 'source-over';
+         (videoEl as HTMLElement).style.maskComposite = 'add';
+
          // Clear any residual JS overrides to restore your perfect original circle layout
          videoEl.style.marginTop = "";
          videoEl.style.transform = "";
@@ -116,13 +168,46 @@ export function Herosection2() {
          setOpacity(text4Ref, 1);
       }
       
-      if (progressBarRef.current) {
-         let slideProgress = 0;
-         if (progress > 0.4) {
-            slideProgress = Math.min((progress - 0.4) / 0.6, 1);
-         }
-         // Using width instead of transform for broader compatibility without conflicting with Tailwind's root CSS variables
-         progressBarRef.current.style.width = `${slideProgress * 100}%`;
+      
+      // 6. Segmented Progress Bar Logic
+      const getSegFill = (p: number, start: number, end: number) => {
+         if (p < start) return 0;
+         if (p > end) return 100;
+         return ((p - start) / (end - start)) * 100;
+      };
+
+      if (fill1Ref.current) fill1Ref.current.style.width = `${getSegFill(progress, 0.40, 0.55)}%`;
+      if (fill2Ref.current) fill2Ref.current.style.width = `${getSegFill(progress, 0.55, 0.70)}%`;
+      if (fill3Ref.current) fill3Ref.current.style.width = `${getSegFill(progress, 0.70, 0.85)}%`;
+      if (fill4Ref.current) fill4Ref.current.style.width = `${getSegFill(progress, 0.85, 1.00)}%`;
+
+      const setIconState = (ref: React.RefObject<HTMLDivElement | null>, p: number, start: number) => {
+         if (ref.current) ref.current.style.opacity = p >= start ? "1" : "0.2";
+      };
+      setIconState(icon1Ref, progress, 0.40);
+      setIconState(icon2Ref, progress, 0.55);
+      setIconState(icon3Ref, progress, 0.70);
+      setIconState(icon4Ref, progress, 0.85);
+
+      // 7. Dynamic Segment Widths (Accordion Effect)
+      const updateSegWidths = (activeIdx: number) => {
+         const refs = [seg1Ref, seg2Ref, seg3Ref, seg4Ref];
+         refs.forEach((ref, idx) => {
+            if (ref.current) {
+               ref.current.style.flex = idx === activeIdx ? "3 1 0%" : "1 1 0%";
+               ref.current.style.transition = "flex 0.8s cubic-bezier(0.16, 1, 0.3, 1)";
+            }
+         });
+      };
+
+      if (progress < 0.55) { 
+         updateSegWidths(0);
+      } else if (progress < 0.70) { 
+         updateSegWidths(1);
+      } else if (progress < 0.85) { 
+         updateSegWidths(2);
+      } else { 
+         updateSegWidths(3);
       }
     };
 
@@ -133,10 +218,21 @@ export function Herosection2() {
   }, []);
 
   return (
-    <section ref={containerRef} className="bg-white h-[500vh] w-full relative font-sans">
-      <div className="sticky top-0 h-[100dvh] w-full flex flex-col justify-between pt-24 pb-8 px-6 md:px-12 overflow-hidden">
+    <section 
+      ref={containerRef} 
+      className="h-[500vh] w-full relative font-sans"
+      style={{
+        backgroundColor: '#fdfdfd',
+        backgroundImage: 'radial-gradient(#d1d1d1 1px, transparent 1px)',
+        backgroundSize: '32px 32px',
+      }}
+    >
+      <div className="sticky top-0 h-[100dvh] w-full flex flex-col justify-between pt-12 pb-8 px-6 md:px-12 overflow-hidden">
         
-        {/* LEFT INCOMING TEXT CONTAINER */}
+        {/* TOP BRANDING & NAV (As seen in screenshot) */}
+      
+
+        {/* LEFT INCOMING TEXT CONTAINER (Maintained from original) */}
         <div 
           ref={leftTextRef} 
           className="absolute top-0 left-0 w-full md:w-[55%] h-full flex flex-col justify-end md:justify-center px-6 sm:px-10 md:px-24 z-40 opacity-0 pointer-events-none pb-24 md:pb-0"
@@ -215,11 +311,11 @@ export function Herosection2() {
           
           <div className="flex flex-col items-center leading-none tracking-tight text-center w-full max-w-7xl relative">
             
-            {/* Top Line: Designing [video] bold */}
+            {/* Top Line: Crafting [video] bold */}
             <div className="flex flex-row flex-wrap items-center justify-center gap-x-2 md:gap-x-6 w-full">
                
-               <span ref={heroText1Ref} className="text-5xl sm:text-7xl md:text-9xl font-medium text-black relative z-10 will-change-transform">
-                 Designing
+               <span ref={heroText1Ref} className="text-6xl sm:text-8xl md:text-[7rem] font-medium text-black relative z-10 will-change-transform">
+                 Crafting
                </span>
                
                {/* Mascot Circle Area (Z-30 so it eclipses the Z-10 texts) */}
@@ -228,60 +324,109 @@ export function Herosection2() {
                  {/* Expanding Dark Background */}
                  <div 
                    ref={circleBgRef}
-                   className="absolute inset-0 rounded-[50%] bg-[#2F2F2F] will-change-transform z-0 origin-center [clip-path:circle(50%_at_50%_50%)]"
+                   className="absolute inset-0 rounded-[50%] bg-[#1A1A1A] will-change-transform z-0 origin-center [clip-path:circle(50%_at_50%_50%)]"
                  />
 
                  {/* The Static Mascot */}
                  <div 
                    ref={mascotRef}
-                   className="absolute inset-0 rounded-[50%] overflow-hidden will-change-transform z-10 origin-center [clip-path:circle(50%_at_50%_50%)] [-webkit-mask-image:-webkit-radial-gradient(black,black)] isolate"
+                   className="absolute inset-0 will-change-transform z-20 origin-center isolate overflow-visible"
                  >
                     <video 
-                       src="/dnc_mascot.mp4" 
+                       src="/mascot.webm" 
                        autoPlay 
                        loop 
                        muted 
                        playsInline
-                       className="absolute inset-0 object-contain scale-[1] w-full h-full"
+                       className="absolute inset-0 object-contain w-full h-full"
+                       style={{
+                          // Initial state: Shifted down to bottom, with 85% reveal
+                          WebkitMaskImage: 'linear-gradient(to bottom, black 19%, transparent 19%), radial-gradient(circle at 50% 50%, black 31.25%, transparent 31.75%), linear-gradient(to top, transparent 15%, black 15%)',
+                          WebkitMaskComposite: 'source-over', 
+                          maskImage: 'linear-gradient(to bottom, black 19%, transparent 19%), radial-gradient(circle at 50% 50%, black 31.25%, transparent 31.75%), linear-gradient(to top, transparent 15%, black 15%)',
+                          maskComposite: 'add'
+                       }}
                     />
                  </div>
 
                </div>
                
-               <span ref={heroText2Ref} className="text-5xl sm:text-7xl md:text-9xl font-medium text-black relative z-10 will-change-transform">
+               <span ref={heroText2Ref} className="text-6xl sm:text-8xl md:text-[7rem] font-medium text-black relative z-10 will-change-transform">
                  bold
                </span>
             </div>
 
-            {/* Bottom Line: digital products */}
+            {/* Bottom Line: design experiences */}
             <div ref={heroText3Ref} className="flex flex-row flex-wrap justify-center items-center gap-x-4 md:gap-x-8 -mt-2 sm:-mt-4 md:-mt-8 relative z-10 will-change-transform">
-              <span className="text-5xl sm:text-7xl md:text-9xl font-medium text-black">
-                digital
+              <span className="text-6xl sm:text-8xl md:text-[7rem] font-medium text-black">
+                design
               </span>
-              <span className="text-[3.5rem] sm:text-[5rem] md:text-[8.5rem] italic font-serif text-black leading-none pt-2 md:pt-4 pr-1">
-                products
+              <span className="text-[3.5rem] sm:text-[6rem] md:text-[7rem] italic font-serif text-black leading-none pt-2 md:pt-4 pr-1">
+                experiences
               </span>
+              
             </div>
 
           </div>
 
           <div ref={footerRef} className="w-full flex flex-col gap-4 sm:flex-row sm:justify-between items-center mt-30 relative z-10 will-change-transform pt-6">
              <span className="text-black text-sm md:text-base font-normal tracking-wide">
-               designncode
+               @designncode
              </span>
              <span className="text-black text-sm md:text-base font-normal tracking-wide">
                We see the magic in the details.
              </span>
              <span className="text-black text-sm md:text-base font-normal tracking-wide cursor-pointer hover:underline underline-offset-4">
-               Explore our work
+               Click for a surprise
              </span>
           </div>
 
         </div>
 
-        {/* Full-width Progress Bar */}
-        <div ref={progressBarContainerRef} className="absolute bottom-8 left-6 md:left-12 lg:left-24 right-6 md:right-12 lg:right-24 h-0.5 sm:h-1 bg-[#3A3A3A] rounded-full overflow-hidden opacity-0 z-40 pointer-events-none">
-           <div ref={progressBarRef} className="absolute left-0 top-0 h-full bg-white transition-none" style={{ width: '0%' }} />
+        {/* Segmented Progress Bar (Funtown Studio Style) */}
+        <div 
+          ref={progressBarContainerRef} 
+          className="absolute bottom-12 left-6 md:left-12 lg:left-24 right-6 md:right-12 lg:right-24 flex gap-4 md:gap-8 z-40 opacity-0 transition-opacity duration-300 pointer-events-none"
+        >
+           {/* Section 1: Shopify */}
+           <div ref={seg1Ref} className="flex flex-col gap-3" style={{ flex: '1 1 0%' }}>
+              <div ref={icon1Ref} className="transition-opacity duration-300">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              </div>
+              <div className="h-[2px] w-full bg-white/10 relative overflow-hidden">
+                 <div ref={fill1Ref} className="absolute inset-0 bg-white origin-left" style={{ width: '0%' }} />
+              </div>
+           </div>
+
+           {/* Section 2: Custom */}
+           <div ref={seg2Ref} className="flex flex-col gap-3" style={{ flex: '1 1 0%' }}>
+              <div ref={icon2Ref} className="transition-opacity duration-300">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              </div>
+              <div className="h-[2px] w-full bg-white/10 relative overflow-hidden">
+                 <div ref={fill2Ref} className="absolute inset-0 bg-white origin-left" style={{ width: '0%' }} />
+              </div>
+           </div>
+
+           {/* Section 3: WordPress */}
+           <div ref={seg3Ref} className="flex flex-col gap-3" style={{ flex: '1 1 0%' }}>
+              <div ref={icon3Ref} className="transition-opacity duration-300">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              </div>
+              <div className="h-[2px] w-full bg-white/10 relative overflow-hidden">
+                 <div ref={fill3Ref} className="absolute inset-0 bg-white origin-left" style={{ width: '0%' }} />
+              </div>
+           </div>
+
+           {/* Section 4: UI/UX */}
+           <div ref={seg4Ref} className="flex flex-col gap-3" style={{ flex: '1 1 0%' }}>
+              <div ref={icon4Ref} className="transition-opacity duration-300">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M3 3h6v6H3z"/><path d="M15 3h6v6h-6z"/><path d="M15 15h6v6h-6z"/><path d="M3 15h6v6H3z"/></svg>
+              </div>
+              <div className="h-[2px] w-full bg-white/10 relative overflow-hidden">
+                 <div ref={fill4Ref} className="absolute inset-0 bg-white origin-left" style={{ width: '0%' }} />
+              </div>
+           </div>
         </div>
 
       </div>

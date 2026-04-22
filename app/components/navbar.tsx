@@ -12,47 +12,61 @@ export function Navbar() {
   const closeMenu = () => setIsMenuOpen(false);
 
   return (
-    <header className="sticky top-0 z-50 mx-auto w-full max-w-7xl md:mt-3">
-      <div className="relative h-12 w-full overflow-hidden bg-[rgba(148,148,148,0.40)] px-2 shadow-xl shadow-gray-400/40 backdrop-blur-[7.3px] md:h-[75px] md:px-6">
+    <header className="sticky top-0 z-[100] mx-auto w-full max-w-7xl md:mt-4">
+      <div className="relative h-14 w-full overflow-hidden bg-white/70 px-4 shadow-sm backdrop-blur-md md:h-[80px] md:px-8 border-b border-gray-100 md:rounded-2xl">
         <button
           type="button"
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           onClick={() => setIsMenuOpen((prev) => !prev)}
-          className="absolute left-1 top-1/2 z-40 flex h-10 w-10 -translate-y-1/2 items-center justify-center"
+          className="absolute left-4 top-1/2 z-40 flex items-center justify-center -translate-y-1/2"
         >
-          <img
-            src={isMenuOpen ? closeIconSrc : menuIconSrc}
-            alt=""
-            className="h-4 w-4 object-contain"
-          />
+          {isMenuOpen ? (
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          ) : (
+            <div className="flex flex-col gap-1.5 items-start">
+              <span className="w-6 h-0.5 bg-black rounded-full transition-all"></span>
+              <span className="w-4 h-0.5 bg-black rounded-full transition-all"></span>
+            </div>
+          )}
         </button>
 
-        <Link href="/" aria-label="Go to homepage">
-          <img
-            src={logoSrc}
-            alt="Designncode"
-            className="absolute left-1/2 top-2 h-8 w-24 -translate-x-1/2 md:top-4 md:h-[45px] md:w-[152px]"
-          />
+        <Link href="/" aria-label="Go to homepage" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          <div className="border border-black/60 px-4 py-2 relative inline-flex backdrop-blur-sm scale-[0.8] md:scale-100 origin-center">
+            {/* Transform Nodes */}
+            <div className="absolute -top-1 -left-1 w-1.5 h-1.5 border border-black/80 bg-white" />
+            <div className="absolute -top-1 -right-1 w-1.5 h-1.5 border border-black/80 bg-white" />
+            <div className="absolute -bottom-1 -left-1 w-1.5 h-1.5 border border-black/80 bg-white" />
+            <div className="absolute -bottom-1 -right-1 w-1.5 h-1.5 border border-black/80 bg-white" />
+            <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 border border-black/80 bg-white" />
+            <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 border border-black/80 bg-white" />
+            <div className="absolute top-1/2 -left-1 -translate-y-1/2 w-1.5 h-1.5 border border-black/80 bg-white" />
+            <div className="absolute top-1/2 -right-1 -translate-y-1/2 w-1.5 h-1.5 border border-black/80 bg-white" />
+            
+            <span className="text-black font-bold tracking-[0.25em] text-[11px] md:text-[13px] leading-none mt-[1px] whitespace-nowrap">DESIGNNCODE</span>
+          </div>
         </Link>
 
         <Link
           href="/contact"
-          className="hidden absolute right-4 top-2 bg-black px-4 py-2 text-center text-sm leading-4 font-normal text-white md:block md:right-[22px] md:top-4 md:px-[30px] md:py-[14px] md:text-[16px] md:leading-[16px]"
+          className="hidden absolute right-4 top-1/2 -translate-y-1/2 bg-black px-6 py-2.5 text-center text-xs font-bold text-white uppercase tracking-wider md:block md:right-6 md:px-8 md:py-3 md:text-sm"
         >
           LET&apos;S WORK TOGETHER
         </Link>
 
         <Link
           href="/contact"
-          className="absolute right-2 top-2 z-30 bg-black px-2.5 py-1.5 text-center text-[10px] leading-3 font-normal text-white md:hidden"
+          className="absolute right-2 top-1/2 -translate-y-1/2 z-30 bg-black px-3 py-1.5 text-center text-[10px] font-bold text-white uppercase md:hidden"
         >
           LET&apos;S WORK
         </Link>
       </div>
       <div
-        className={`overflow-hidden bg-[rgba(148,148,148,0.40)] shadow-xl shadow-gray-400/40 backdrop-blur-[7.3px] transition-all duration-300 ease-out ${
+        className={`overflow-hidden bg-white/90 shadow-xl backdrop-blur-lg transition-all duration-300 ease-out md:rounded-2xl mt-2 ${
           isMenuOpen
-            ? "mt-1 max-h-[460px] translate-y-0 opacity-100 md:max-h-[430px]"
+            ? "max-h-[460px] translate-y-0 opacity-100 md:max-h-[430px]"
             : "max-h-0 -translate-y-2 opacity-0"
         }`}
       >
