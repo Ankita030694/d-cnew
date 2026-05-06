@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 export function ProjectCtaSection() {
   const [isHovering, setIsHovering] = useState(false);
   const router = useRouter();
-  
+
   // Physics Refs
   const mouseRef = useRef({ x: 0, y: 0 });
   const headRef = useRef({ x: 0, y: 0, speed: 0.18 });
@@ -41,14 +41,14 @@ export function ProjectCtaSection() {
       const dx = mouseRef.current.x - headRef.current.x;
       const dy = mouseRef.current.y - headRef.current.y;
       const dist = Math.sqrt(dx * dx + dy * dy);
-      
+
       // Calculate dynamic offset based on mouse proximity/speed
-      const tension = Math.min(dist * 0.4, 100); 
+      const tension = Math.min(dist * 0.4, 100);
       const angle = Math.atan2(dy, dx);
-      
+
       const targetX = headRef.current.x - Math.cos(angle) * (60 + tension * 0.5);
       const targetY = headRef.current.y - Math.sin(angle) * (60 + tension * 0.5);
-      
+
       buttonRef.current.x += (targetX - buttonRef.current.x) * buttonRef.current.speed;
       buttonRef.current.y += (targetY - buttonRef.current.y) * buttonRef.current.speed;
 
@@ -93,34 +93,34 @@ export function ProjectCtaSection() {
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#737373_1px,transparent_1px),linear-gradient(to_bottom,#737373_1px,transparent_1px)] bg-[size:6rem_6rem] [background-position:center_top]" />
           <div className="absolute inset-0 bg-gradient-to-b from-white/0 via-white/80 to-white/0" />
         </div>
-        
+
         <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center justify-center px-6 text-center md:px-5">
-            <span className="mb-6 md:mb-8 block text-[10px] md:text-sm font-medium tracking-[0.3em] uppercase text-black/40">
-                Crafting Excellence
-            </span>
+          <span className="mb-6 md:mb-8 block text-[10px] md:text-sm font-medium tracking-[0.3em] uppercase text-black/40">
+            Crafting Excellence
+          </span>
           <h2 className="text-4xl sm:text-6xl md:text-[104px] leading-[1.1] md:leading-[1] font-medium text-[#1a1a1a] tracking-tight">
             Let&apos;s Build<br />
             Something <span className="font-serif italic text-black/90">Remarkable.</span>
           </h2>
-          
+
           <div className="mt-12 md:mt-16 group flex items-center gap-4 md:gap-6 opacity-60 hover:opacity-100 transition-all duration-700">
-             <div className="h-[1px] w-12 md:w-16 bg-black group-hover:w-24 transition-all duration-700" />
-             <span className="text-lg md:text-xl font-medium tracking-wide">Start a conversation</span>
-             <div className="h-[1px] w-12 md:w-16 bg-black group-hover:w-24 transition-all duration-700" />
+            <div className="h-[1px] w-12 md:w-16 bg-black group-hover:w-24 transition-all duration-700" />
+            <span className="text-lg md:text-xl font-medium tracking-wide">Start a conversation</span>
+            <div className="h-[1px] w-12 md:w-16 bg-black group-hover:w-24 transition-all duration-700" />
           </div>
 
           {/* Mobile Mascot (Visible only on mobile) */}
           <div className="mt-12 md:hidden relative w-32 h-32 rounded-full overflow-hidden border-4 border-black/5 shadow-lg">
-             <video
-                 autoPlay
-                 loop
-                 muted
-                 playsInline
-                 className="h-full w-full object-cover scale-110 mt-2"
-             >
-                 <source src="/mascot.webm" type="video/webm" />
-                 <source src="/dnc_mascot.mp4" type="video/mp4" />
-             </video>
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="h-full w-full object-contain scale-110"
+            >
+              <source src="/mascot.webm" type="video/webm" />
+              <source src="/dnc_mascot.mp4" type="video/mp4" />
+            </video>
           </div>
         </div>
       </section>
@@ -130,11 +130,11 @@ export function ProjectCtaSection() {
         <defs>
           <filter id="goo">
             <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur" />
-            <feColorMatrix 
-              in="blur" 
-              mode="matrix" 
-              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 35 -15" 
-              result="goo" 
+            <feColorMatrix
+              in="blur"
+              mode="matrix"
+              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 35 -15"
+              result="goo"
             />
             <feComposite in="SourceGraphic" in2="goo" operator="atop" />
           </filter>
@@ -142,24 +142,24 @@ export function ProjectCtaSection() {
       </svg>
 
       {/* Liquid Cursor Container - Hidden on mobile/touch */}
-      <div 
+      <div
         className={`pointer-events-none fixed inset-0 z-50 transition-opacity duration-700 ease-in-out hidden md:block ${isHovering ? "opacity-100" : "opacity-0"}`}
       >
         {/* Gooey Filtered Layer */}
         <div style={{ filter: "url(#goo)" }} className="absolute inset-0">
-          
+
           {/* Head Blob */}
-          <div 
-             ref={mascotBlobRef}
-             className="fixed left-0 top-0 rounded-full bg-black will-change-transform"
-             style={{ width: '130px', height: '130px', zIndex: 50 }}
+          <div
+            ref={mascotBlobRef}
+            className="fixed left-0 top-0 rounded-full bg-black will-change-transform"
+            style={{ width: '130px', height: '130px', zIndex: 50 }}
           />
 
           {/* Magnetic Button Blob */}
-          <div 
-             ref={buttonBlobRef}
-             className="fixed left-0 top-0 rounded-full bg-black will-change-transform"
-             style={{ width: '150px', height: '60px', zIndex: 40 }}
+          <div
+            ref={buttonBlobRef}
+            className="fixed left-0 top-0 rounded-full bg-black will-change-transform"
+            style={{ width: '150px', height: '60px', zIndex: 40 }}
           />
 
           {/* Trail Blobs */}
@@ -176,32 +176,32 @@ export function ProjectCtaSection() {
             />
           ))}
         </div>
-        
+
         {/* Sharp Interactive Content Layer */}
         <div className="absolute inset-0">
-             {/* Mascot Video */}
-             <div 
-                ref={mascotContentRef}
-                className="fixed left-0 top-0 h-[105px] w-[105px] overflow-hidden rounded-full border-[6px] border-white shadow-xl will-change-transform z-[60]"
-             >
-                <video
-                    className="h-full w-full object-cover scale-110 mt-3"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                >
-                    <source src="/mascot.webm" type="video/webm" />
-                    <source src="/dnc_mascot.mp4" type="video/mp4" />
-                </video>
-             </div>
+          {/* Mascot Video */}
+          <div
+            ref={mascotContentRef}
+            className="fixed left-0 top-0 h-[105px] w-[105px] overflow-hidden rounded-full border-[6px] border-white shadow-xl will-change-transform z-[60]"
+          >
+            <video
+              className="h-full w-full object-cover scale-110 mt-3"
+              autoPlay
+              loop
+              muted
+              playsInline
+            >
+              <source src="/mascot.webm" type="video/webm" />
+              <source src="/dnc_mascot.mp4" type="video/mp4" />
+            </video>
+          </div>
 
-             {/* Contact Text */}
-             <div 
-                ref={buttonTextRef}
-                className="fixed left-0 top-0 flex items-center justify-center will-change-transform z-[70] w-[150px] h-[60px]"
-             >
-             </div>
+          {/* Contact Text */}
+          <div
+            ref={buttonTextRef}
+            className="fixed left-0 top-0 flex items-center justify-center will-change-transform z-[70] w-[150px] h-[60px]"
+          >
+          </div>
         </div>
       </div>
     </>
