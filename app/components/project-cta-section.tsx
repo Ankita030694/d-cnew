@@ -110,7 +110,7 @@ export function ProjectCtaSection() {
           </div>
 
           {/* Mobile Mascot (Visible only on mobile) */}
-          <div className="mt-12 md:hidden relative w-32 h-32 rounded-full overflow-hidden border-4 border-black/5 shadow-lg">
+          <div className="mt-12 md:hidden relative w-32 h-32 rounded-full overflow-hidden border-4 border-black/5 shadow-lg bg-[#242424]">
             <video
               autoPlay
               loop
