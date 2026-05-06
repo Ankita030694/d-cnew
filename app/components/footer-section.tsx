@@ -42,29 +42,29 @@ const linkColumns: FooterLinkColumn[] = [
 
 export function FooterSection() {
   return (
-    <footer className="mx-auto w-full max-w-7xl px-4 pb-6 pt-8 md:px-[45px] md:pb-9 md:pt-[75px]">
-      <div className="flex flex-col gap-9 md:flex-row md:justify-between">
+    <footer className="mx-auto w-full max-w-7xl px-6 pb-6 pt-24 md:px-[45px] md:pb-9 md:pt-8">
+      <div className="flex flex-col gap-12 md:flex-row md:justify-between">
         <div className="max-w-[397px]">
-          <img src={logoSrc} alt="Designncode" className="h-[45px] w-[152px]" />
+          <img src={logoSrc} alt="Designncode" className="h-[35px] md:h-[45px] w-auto" />
 
-          <h2 className="mt-6 text-[28px] leading-[34px] font-medium text-black md:text-[34px] md:leading-[40px]">
+          <h2 className="mt-6 text-[24px] leading-[30px] font-medium text-black md:text-[34px] md:leading-[40px]">
             Design that looks good.
             <br />
             Code that <span className="font-serif italic">works better</span>.
           </h2>
 
-          <p className="mt-3 text-[16px] leading-[22px] text-black/50 md:text-[19px]">
+          <p className="mt-3 text-[15px] leading-[20px] text-black/50 md:text-[19px]">
             Built for startups, creators, and brands who want to stand out
             online.
           </p>
 
-          <div className="mt-9 flex items-center gap-[22px]">
+          <div className="mt-8 flex items-center gap-4 md:gap-[22px]">
             <a
               href="https://x.com/designncode"
               target="_blank"
               rel="noreferrer"
               aria-label="X (Twitter)"
-              className="size-[52px]"
+              className="size-10 md:size-[52px]"
             >
               <img src={xIconSrc} alt="" className="h-full w-full" />
             </a>
@@ -73,7 +73,7 @@ export function FooterSection() {
               target="_blank"
               rel="noreferrer"
               aria-label="Instagram"
-              className="size-[52px]"
+              className="size-10 md:size-[52px]"
             >
               <img src={instagramIconSrc} alt="" className="h-full w-full" />
             </a>
@@ -82,7 +82,7 @@ export function FooterSection() {
               target="_blank"
               rel="noreferrer"
               aria-label="LinkedIn"
-              className="size-[52px]"
+              className="size-10 md:size-[52px]"
             >
               <img src={linkedinIconSrc} alt="" className="h-full w-full" />
             </a>
@@ -91,11 +91,11 @@ export function FooterSection() {
 
         <nav
           aria-label="Footer navigation"
-          className="grid grid-cols-2 gap-8 md:grid-cols-3 md:gap-[90px]"
+          className="grid grid-cols-1 sm:grid-cols-2 gap-10 md:grid-cols-3 md:gap-[90px]"
         >
           {linkColumns.map((column) => (
             <div key={column.heading} className="space-y-[16px]">
-              <h3 className="text-[21px] leading-[22px] font-medium text-black md:text-[22px]">
+              <h3 className="text-[19px] md:text-[21px] leading-[22px] font-medium text-black md:text-[22px]">
                 {column.heading}
               </h3>
 
@@ -104,7 +104,7 @@ export function FooterSection() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-[17px] leading-[19px] font-medium text-black/65 md:text-[19px]"
+                      className="text-[16px] md:text-[17px] leading-[19px] font-medium text-black/65 md:text-[19px]"
                     >
                       {link.label}
                     </Link>

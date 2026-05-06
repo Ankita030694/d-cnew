@@ -14,6 +14,8 @@ import { Herosection2 } from "./components/herosection2";
 import { ServicesCards } from "./components/services-cards";
 import { ResultsSection } from "./components/results-section";
 import { StackSection } from "./components/stack-section";
+import { ProjectsSection } from "./components/projects-section";
+import { InsightsSection } from "./components/insights-section";
 
 
 
@@ -30,25 +32,15 @@ export default function Home() {
   return (
     <main className="flex flex-col w-full bg-white">
       <Navbar />
-
       <Herosection2 />
       <ServicesCards />
       <ResultsSection />
       <StackSection />
-
-
-
-
-
-
-
-      <ExpertiseSection />
-      <Services2 />
-      <WhyChooseSection />
+      <ProjectsSection />
       <FaqSection />
+      <InsightsSection />
       <ProjectCtaSection />
       <FooterSection />
-
     </main>
   );
 }

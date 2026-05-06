@@ -86,27 +86,27 @@ export function ProjectCtaSection() {
         onMouseLeave={() => setIsHovering(false)}
         onMouseMove={handleMouseMove}
         onClick={() => router.push("/contact")}
-        className="relative flex cursor-none min-h-[500px] w-full items-center justify-center overflow-hidden bg-white py-24 md:min-h-[650px] md:py-40"
+        className="relative flex md:cursor-none min-h-[400px] w-full items-center justify-center overflow-hidden bg-white py-20 md:min-h-[650px] md:py-8"
       >
         {/* Dynamic Background */}
         <div className="absolute inset-0 z-0 opacity-40" aria-hidden="true">
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#e5e5e5_1px,transparent_1px),linear-gradient(to_bottom,#e5e5e5_1px,transparent_1px)] bg-[size:6rem_6rem] [background-position:center_top]" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#737373_1px,transparent_1px),linear-gradient(to_bottom,#737373_1px,transparent_1px)] bg-[size:6rem_6rem] [background-position:center_top]" />
           <div className="absolute inset-0 bg-gradient-to-b from-white/0 via-white/80 to-white/0" />
         </div>
         
-        <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center justify-center px-4 text-center md:px-5">
-            <span className="mb-8 block text-sm font-medium tracking-[0.3em] uppercase text-black/40">
+        <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center justify-center px-6 text-center md:px-5">
+            <span className="mb-6 md:mb-8 block text-[10px] md:text-sm font-medium tracking-[0.3em] uppercase text-black/40">
                 Crafting Excellence
             </span>
-          <h2 className="text-[52px] leading-[1] font-medium text-[#1a1a1a] sm:text-[72px] md:text-[104px] tracking-tight">
+          <h2 className="text-4xl sm:text-6xl md:text-[104px] leading-[1.1] md:leading-[1] font-medium text-[#1a1a1a] tracking-tight">
             Let&apos;s Build<br />
             Something <span className="font-serif italic text-black/90">Remarkable.</span>
           </h2>
           
-          <div className="mt-16 group flex items-center gap-6 opacity-60 hover:opacity-100 transition-all duration-700">
-             <div className="h-[1px] w-16 bg-black group-hover:w-24 transition-all duration-700" />
-             <span className="text-xl font-medium tracking-wide">Start a conversation</span>
-             <div className="h-[1px] w-16 bg-black group-hover:w-24 transition-all duration-700" />
+          <div className="mt-12 md:mt-16 group flex items-center gap-4 md:gap-6 opacity-60 hover:opacity-100 transition-all duration-700">
+             <div className="h-[1px] w-12 md:w-16 bg-black group-hover:w-24 transition-all duration-700" />
+             <span className="text-lg md:text-xl font-medium tracking-wide">Start a conversation</span>
+             <div className="h-[1px] w-12 md:w-16 bg-black group-hover:w-24 transition-all duration-700" />
           </div>
         </div>
       </section>
@@ -127,9 +127,9 @@ export function ProjectCtaSection() {
         </defs>
       </svg>
 
-      {/* Liquid Cursor Container */}
+      {/* Liquid Cursor Container - Hidden on mobile/touch */}
       <div 
-        className={`pointer-events-none fixed inset-0 z-50 transition-opacity duration-700 ease-in-out ${isHovering ? "opacity-100" : "opacity-0"}`}
+        className={`pointer-events-none fixed inset-0 z-50 transition-opacity duration-700 ease-in-out hidden md:block ${isHovering ? "opacity-100" : "opacity-0"}`}
       >
         {/* Gooey Filtered Layer */}
         <div style={{ filter: "url(#goo)" }} className="absolute inset-0">
@@ -171,8 +171,8 @@ export function ProjectCtaSection() {
                 className="fixed left-0 top-0 h-[105px] w-[105px] overflow-hidden rounded-full border-[6px] border-white shadow-xl will-change-transform z-[60]"
              >
                 <video
-                    src="/hero_mascot.mp4"
-                    className="h-full w-full object-cover scale-110"
+                    src="/mascot.webm"
+                    className="h-full w-full object-cover scale-110 mt-3"
                     autoPlay
                     loop
                     muted
@@ -185,7 +185,6 @@ export function ProjectCtaSection() {
                 ref={buttonTextRef}
                 className="fixed left-0 top-0 flex items-center justify-center will-change-transform z-[70] w-[150px] h-[60px]"
              >
-                <span className="text-[14px] font-bold text-white tracking-[0.2em] uppercase">Contact</span>
              </div>
         </div>
       </div>
