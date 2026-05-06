@@ -33,7 +33,7 @@ export function Herosection2() {
 
               {/* The Static Mascot */}
               <div
-                className="absolute inset-0 z-20 origin-center isolate overflow-visible"
+                className="absolute inset-0 z-50 origin-center isolate overflow-visible"
                 style={{
                   transformOrigin: "50% 50%",
                   transform: "translate(0vw, calc(0vh + -2%)) scale(1.6)"
@@ -46,13 +46,14 @@ export function Herosection2() {
                   playsInline
                   className="absolute inset-0 object-contain w-full h-full"
                   style={{
-                    WebkitMaskImage: 'linear-gradient(to bottom, black 19.75%, transparent 19.75%), radial-gradient(circle at 50% 50%, black 31.25%, transparent 31.75%), linear-gradient(to top, transparent 15%, black 15%)',
+                    WebkitMaskImage: 'radial-gradient(circle at 50% 40%, black 40%, transparent 40.5%), radial-gradient(circle at 50% 50%, black 31.25%, transparent 31.75%)',
                     WebkitMaskComposite: 'source-over',
-                    maskImage: 'linear-gradient(to bottom, black 19.75%, transparent 19.75%), radial-gradient(circle at 50% 50%, black 31.25%, transparent 31.75%), linear-gradient(to top, transparent 15%, black 15%)',
+                    maskImage: 'radial-gradient(circle at 50% 40%, black 40%, transparent 40.5%), radial-gradient(circle at 50% 50%, black 31.25%, transparent 31.75%)',
                     maskComposite: 'add'
                   }}
                 >
                   <source src="/mascot.webm" type="video/webm" />
+                  <source src="/dnc_mascot.mp4" type="video/mp4" />
                 </video>
               </div>
 
@@ -76,7 +77,7 @@ export function Herosection2() {
 
         </div>
 
-        <div className="w-full flex flex-col gap-6 sm:flex-row sm:justify-between items-center mt-16 md:mt-30 relative z-10 md:pt-40">
+        <div className="w-full flex flex-row flex-wrap justify-between items-center gap-x-4 gap-y-2 mt-16 md:mt-30 relative z-10 md:pt-40">
           <span className="text-black text-xs md:text-base font-normal tracking-wide">
             @designncode
           </span>

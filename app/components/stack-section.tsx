@@ -43,18 +43,30 @@ const stackItems = [
 /* ─── measure badge sizes with a hidden probe ─── */
 function useBadgeSizes() {
   const [sizes, setSizes] = useState<{ w: number; h: number }[]>([]);
+  const [isMobile, setIsMobile] = useState(false);
   const probeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!probeRef.current) return;
-    const els = probeRef.current.children;
-    const measured: { w: number; h: number }[] = [];
-    for (let i = 0; i < els.length; i++) {
-      const rect = els[i].getBoundingClientRect();
-      measured.push({ w: rect.width, h: rect.height });
-    }
-    setSizes(measured);
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    if (!probeRef.current) return;
+    // Small delay to ensure styles are applied
+    const timer = setTimeout(() => {
+      const els = probeRef.current!.children;
+      const measured: { w: number; h: number }[] = [];
+      for (let i = 0; i < els.length; i++) {
+        const rect = els[i].getBoundingClientRect();
+        measured.push({ w: rect.width, h: rect.height });
+      }
+      setSizes(measured);
+    }, 50);
+    return () => clearTimeout(timer);
+  }, [isMobile]);
 
   const probeEl = (
     <div
@@ -77,15 +89,15 @@ function useBadgeSizes() {
             style={{
               display: "inline-flex",
               alignItems: "center",
-              gap: 10,
-              padding: "12px 32px",
+              gap: isMobile ? 8 : 10,
+              padding: isMobile ? "8px 20px" : "12px 32px",
               borderRadius: 9999,
-              fontSize: 20,
+              fontSize: isMobile ? 15 : 20,
               fontWeight: 700,
               whiteSpace: "nowrap",
             }}
           >
-            <Icon style={{ fontSize: 26 }} />
+            <Icon style={{ fontSize: isMobile ? 20 : 26 }} />
             <span>{item.name}</span>
           </div>
         );
@@ -93,7 +105,7 @@ function useBadgeSizes() {
     </div>
   );
 
-  return { sizes, probeEl };
+  return { sizes, probeEl, isMobile };
 }
 
 /* ─── main component ─── */
@@ -129,7 +141,7 @@ export function StackSection() {
     return () => observer.disconnect();
   }, []);
 
-  const { sizes, probeEl } = useBadgeSizes();
+  const { sizes, probeEl, isMobile } = useBadgeSizes();
 
   /* sync DOM to physics bodies at ~60fps */
   const syncPositions = useCallback(() => {
@@ -269,8 +281,8 @@ export function StackSection() {
           style={{
             position: "relative",
             width: "100%",
-            height: 500,
-            marginTop: 64,
+            height: isMobile ? 400 : 500,
+            marginTop: isMobile ? 40 : 64,
             overflow: "hidden",
             borderRadius: 24,
             background: "#ffffff",
@@ -305,9 +317,9 @@ export function StackSection() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    gap: 10,
-                    padding: "12px 32px",
-                    fontSize: 20,
+                    gap: isMobile ? 8 : 10,
+                    padding: isMobile ? "8px 20px" : "12px 32px",
+                    fontSize: isMobile ? 15 : 20,
                     fontWeight: 700,
                     whiteSpace: "nowrap",
                     cursor: "grab",
@@ -316,7 +328,7 @@ export function StackSection() {
                     willChange: "transform",
                   }}
                 >
-                  <Icon style={{ fontSize: 26, flexShrink: 0 }} />
+                  <Icon style={{ fontSize: isMobile ? 20 : 26, flexShrink: 0 }} />
                   <span style={{ letterSpacing: "-0.02em" }}>{item.name}</span>
                 </div>
               );
