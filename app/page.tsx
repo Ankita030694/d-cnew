@@ -11,6 +11,11 @@ import { FaqSection } from "./components/faq-section";
 import { ProjectCtaSection } from "./components/project-cta-section";
 import { FooterSection } from "./components/footer-section";
 import { Herosection2 } from "./components/herosection2";
+import { ServicesCards } from "./components/services-cards";
+import { ResultsSection } from "./components/results-section";
+import { StackSection } from "./components/stack-section";
+
+
 
 export const metadata: Metadata = {
   title: "Website Development Company in India | Custom Web Design Services",
@@ -27,7 +32,11 @@ export default function Home() {
       <Navbar />
 
       <Herosection2 />
-      
+      <ServicesCards />
+      <ResultsSection />
+      <StackSection />
+
+
 
 
 
