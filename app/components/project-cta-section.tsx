@@ -86,7 +86,7 @@ export function ProjectCtaSection() {
         onMouseLeave={() => setIsHovering(false)}
         onMouseMove={handleMouseMove}
         onClick={() => router.push("/contact")}
-        className="relative flex md:cursor-none min-h-[400px] w-full items-center justify-center overflow-hidden bg-white py-20 md:min-h-[650px] md:py-8"
+        className="relative flex md:cursor-none min-h-[400px] w-full items-center justify-center overflow-hidden bg-white py-8 md:min-h-[650px] md:py-8"
       >
         {/* Dynamic Background */}
         <div className="absolute inset-0 z-0 opacity-40" aria-hidden="true">
@@ -107,6 +107,20 @@ export function ProjectCtaSection() {
              <div className="h-[1px] w-12 md:w-16 bg-black group-hover:w-24 transition-all duration-700" />
              <span className="text-lg md:text-xl font-medium tracking-wide">Start a conversation</span>
              <div className="h-[1px] w-12 md:w-16 bg-black group-hover:w-24 transition-all duration-700" />
+          </div>
+
+          {/* Mobile Mascot (Visible only on mobile) */}
+          <div className="mt-12 md:hidden relative w-32 h-32 rounded-full overflow-hidden border-4 border-black/5 shadow-lg">
+             <video
+                 autoPlay
+                 loop
+                 muted
+                 playsInline
+                 className="h-full w-full object-cover scale-110 mt-2"
+             >
+                 <source src="/mascot.webm" type="video/webm" />
+                 <source src="/dnc_mascot.mp4" type="video/mp4" />
+             </video>
           </div>
         </div>
       </section>
@@ -171,13 +185,15 @@ export function ProjectCtaSection() {
                 className="fixed left-0 top-0 h-[105px] w-[105px] overflow-hidden rounded-full border-[6px] border-white shadow-xl will-change-transform z-[60]"
              >
                 <video
-                    src="/mascot.webm"
                     className="h-full w-full object-cover scale-110 mt-3"
                     autoPlay
                     loop
                     muted
                     playsInline
-                />
+                >
+                    <source src="/mascot.webm" type="video/webm" />
+                    <source src="/dnc_mascot.mp4" type="video/mp4" />
+                </video>
              </div>
 
              {/* Contact Text */}

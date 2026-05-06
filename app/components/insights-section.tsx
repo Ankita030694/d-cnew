@@ -20,7 +20,7 @@ const insights = [
 
 export function InsightsSection() {
   return (
-    <section className="w-full bg-white py-24 md:py-8">
+    <section className="w-full bg-white py-8 md:py-8">
       <div className="mx-auto w-full max-w-8xl px-6 md:px-16">
         <div className="mb-12">
           <p className="text-xs md:text-base text-gray-600 mb-2 font-medium">The blog</p>

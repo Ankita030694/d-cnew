@@ -40,7 +40,7 @@ export function ServicesCards() {
   ];
 
   return (
-    <section className="py-24 md:py-8 px-6 md:px-12 bg-white overflow-hidden relative">
+    <section className="py-8 md:py-8 px-6 md:px-12 bg-white overflow-hidden relative">
       <div className="max-w-[1800px] mx-auto">
         {/* Title */}
         <div className="text-center mb-16 md:mb-32">

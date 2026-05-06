@@ -240,7 +240,7 @@ export function StackSection() {
   }, [sizes, syncPositions, isInView]);
 
   return (
-    <section className="py-24 md:py-8 bg-white overflow-hidden relative">
+    <section className="py-8 md:py-8 bg-white overflow-hidden relative">
       <div className="max-w-[1440px] mx-auto px-6 md:px-12">
         {/* Heading & Subtext */}
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-8 md:gap-12">

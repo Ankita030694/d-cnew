@@ -49,7 +49,7 @@ export function ProjectsSection() {
       </section>
 
       {/* Grid section seamlessly continuing the dark background */}
-      <section className="w-full bg-white text-black pt-16 pb-0 md:pt-8 md:pb-0 px-6 md:px-12 lg:px-20 relative z-10">
+      <section className="w-full bg-white text-black py-8 md:pt-8 md:pb-0 px-6 md:px-12 lg:px-20 relative z-10">
         <div className="w-full h-full max-w-7xl mx-auto flex flex-col justify-center">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 h-full py-8">
             {projects.map((item, index) => (

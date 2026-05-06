@@ -55,7 +55,7 @@ function FaqItem({
 
 export function FaqSection() {
   return (
-    <section className="w-full bg-[#ffffff] pt-0 pb-24 md:pt-0 md:pb-8">
+    <section className="w-full bg-[#ffffff] py-8 md:pt-0 md:pb-8">
       <div className="mx-auto w-full max-w-7xl px-4 md:px-5">
         <div className="bg-[#efefef] p-6 shadow-[0_4px_18px_rgba(0,0,0,0.15)] sm:p-8 md:p-[50px]">
           <h2 className="max-w-[806px] text-3xl leading-tight font-medium text-black sm:text-4xl md:text-[45px] md:leading-[85px]">

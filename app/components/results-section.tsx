@@ -40,7 +40,7 @@ export function ResultsSection() {
   });
 
   return (
-    <section ref={containerRef} className="py-24 md:py-32 bg-white overflow-hidden min-h-[60vh] flex items-center">
+    <section ref={containerRef} className="py-8 md:py-32 bg-white overflow-hidden min-h-[60vh] flex items-center">
       <div className="max-w-[1440px] mx-auto px-6 md:px-12 w-full">
         <div className="flex flex-col md:flex-row items-stretch justify-between gap-12 md:gap-0">
           

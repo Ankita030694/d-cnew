@@ -5,7 +5,7 @@ import React from "react";
 export function Herosection2() {
   return (
     <section 
-      className="w-full relative font-sans flex flex-col justify-between min-h-[100dvh] pt-24 pb-12 md:pb-8 px-6 md:px-12 overflow-hidden"
+      className="w-full relative font-sans flex flex-col justify-between min-h-[100dvh] pt-24 pb-8 md:pb-8 px-6 md:px-12 overflow-hidden"
       style={{
         backgroundColor: '#fdfdfd',
       }}
@@ -40,7 +40,6 @@ export function Herosection2() {
                  }}
                >
                   <video 
-                     src="/mascot.webm" 
                      autoPlay 
                      loop 
                      muted 
@@ -52,7 +51,10 @@ export function Herosection2() {
                         maskImage: 'linear-gradient(to bottom, black 19.75%, transparent 19.75%), radial-gradient(circle at 50% 50%, black 31.25%, transparent 31.75%), linear-gradient(to top, transparent 15%, black 15%)',
                         maskComposite: 'add'
                      }}
-                  />
+                  >
+                     <source src="/mascot.webm" type="video/webm" />
+                     <source src="/dnc_mascot.mp4" type="video/mp4" />
+                  </video>
                </div>
 
              </div>
