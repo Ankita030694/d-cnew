@@ -12,7 +12,7 @@ export function Herosection2() {
     >
       {/* TOP BRANDING & NAV (As seen in screenshot) */}
 
-      <div className="flex-1 flex flex-col items-center justify-center relative w-full py-12 md:py-20">
+      <div className="flex-1 flex flex-col items-center justify-center relative w-full py-12 md:py-20 md:pt-35 pt-0">
 
         <div className="flex flex-col items-center leading-none tracking-tight text-center w-full max-w-7xl relative">
 
